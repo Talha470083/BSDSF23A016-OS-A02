@@ -1,31 +1,13 @@
-# Makefile - build ls (v1.1.0)
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c99 -g
-SRC_DIR = src
-OBJ_DIR = obj
-BIN_DIR = bin
+CFLAGS = -std=c11 -Wall -Wextra -O2
+SRC = src/ls-v1.2.0.c
+BIN = bin/ls-v1.2.0
 
-SRC = $(SRC_DIR)/ls-v1.1.0.c
-OBJ = $(OBJ_DIR)/ls-v1.1.0.o
-TARGET = $(BIN_DIR)/ls
+all: $(BIN)
 
-.PHONY: all clean dirs run
-
-all: dirs $(TARGET)
-
-dirs:
-	@mkdir -p $(OBJ_DIR)
-	@mkdir -p $(BIN_DIR)
-
-$(OBJ): $(SRC)
-	$(CC) $(CFLAGS) -c $(SRC) -o $(OBJ)
-
-$(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $(TARGET)
+$(BIN): $(SRC)
+	mkdir -p $(dir $(BIN))
+	$(CC) $(CFLAGS) -o $@ $<
 
 clean:
-	rm -f $(OBJ) $(TARGET)
-
-run: all
-	./$(TARGET)
-
+	rm -rf bin
